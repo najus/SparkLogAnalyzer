@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
  * http://httpd.apache.org/docs/2.2/logs.html for more details.
  */
 public class ApacheAccessLog implements Serializable {
+	
+	private static final long serialVersionUID = 6157365408035766672L;
+
 	private static final Logger logger = Logger.getLogger("Access");
 
 	private String ipAddress;

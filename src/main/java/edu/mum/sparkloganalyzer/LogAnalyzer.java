@@ -20,6 +20,9 @@ public class LogAnalyzer {
 	private static Function2<Long, Long, Long> SUM_REDUCER = (a, b) -> a + b;
 
 	private static class ValueComparator<K, V> implements Comparator<Tuple2<K, V>>, Serializable {
+		
+		private static final long serialVersionUID = 5143521232671751388L;
+		
 		private Comparator<V> comparator;
 
 		public ValueComparator(Comparator<V> comparator) {
@@ -35,7 +38,7 @@ public class LogAnalyzer {
 	public static void main(String[] args) {
 
 		// Create a Spark Context.
-		SparkConf conf = new SparkConf().setAppName("Log Analyzer");
+		SparkConf conf = new SparkConf().setAppName("Log Analyzer").setMaster("local");
 		JavaSparkContext sc = new JavaSparkContext(conf);
 
 		// Load the text file into Spark.
@@ -76,6 +79,7 @@ public class LogAnalyzer {
 				.reduceByKey(SUM_REDUCER).top(10, new ValueComparator<>(Comparator.<Long> naturalOrder()));
 		System.out.println(String.format("Top Endpoints: %s", topEndpoints));
 
+		sc.close();
 		sc.stop();
 	}
 }
