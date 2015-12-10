@@ -36,7 +36,7 @@ public class ApacheAccessLog implements Serializable {
 		this.endpoint = endpoint;
 		this.protocol = protocol;
 		this.responseCode = Integer.parseInt(responseCode);
-		this.contentSize = Long.parseLong(contentSize);
+		this.contentSize = Long.parseLong(contentSize.equals("-") ? "0" : contentSize);
 	}
 
 	public String getIpAddress() {
@@ -116,7 +116,7 @@ public class ApacheAccessLog implements Serializable {
 	// 2048
 	private static final String LOG_ENTRY_PATTERN =
 	// 1:IP 2:client 3:user 4:date time 5:method 6:req 7:proto 8:respcode 9:size
-	"^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\d{3}) (\\d+)";
+	"^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\d{3}) ((\\d+)|(\\-))";
 	private static final Pattern PATTERN = Pattern.compile(LOG_ENTRY_PATTERN);
 
 	public static ApacheAccessLog parseFromLogLine(String logline) {
