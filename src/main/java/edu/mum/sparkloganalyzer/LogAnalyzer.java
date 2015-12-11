@@ -74,6 +74,9 @@ public class LogAnalyzer {
 		System.out.println(String.format("Content Size Avg: %s, Min: %s, Max: %s",
 				contentSizes.reduce(SUM_REDUCER) / contentSizes.count(), contentSizes.min(Comparator.naturalOrder()),
 				contentSizes.max(Comparator.naturalOrder())));
+		bw.write(String.format("Content Size Avg: %s, Min: %s, Max: %s",
+				contentSizes.reduce(SUM_REDUCER) / contentSizes.count(), contentSizes.min(Comparator.naturalOrder()),
+				contentSizes.max(Comparator.naturalOrder())));
 
 		// Compute Response Code to Count.
 		List<Tuple2<Integer, Long>> responseCodeToCount = accessLogs
